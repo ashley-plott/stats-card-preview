@@ -1,0 +1,176 @@
+$background-color: #0A0C1C;
+$card-color: #1B1937;
+$image-overlay: #AB5CDB;
+
+//Fonts
+$inter: 'Inter', sans-serif;
+$lexend: 'Lexend Deca', sans-serif;
+
+
+@mixin fluid-type($font-min, $font-max) {
+  font-size: #{$font-min}px;
+  line-height: calc(#{$font-min}px + 10px);
+
+  @media only screen and (min-width: 375px) {
+    font-size: calc(
+            #{$font-min}px + #{($font-max - $font-min)} * (100vw - 375px) / (1560 - 375)
+    );
+    line-height: calc(
+            #{$font-min}px + 10px + #{($font-max - $font-min)} * (100vw - 375px) / (1560 - 375)
+    );
+  }
+
+  @media only screen and (min-width: 1560px) {
+    font-size: #{$font-max}px;
+    line-height: calc(#{$font-max}px + 10px);
+  }
+}
+
+@mixin responsive-bg-image($image-width, $image-height) {
+  background-size: cover;
+  height: 0;
+  padding-bottom: percentage($image-height / $image-width);
+  display: block;
+  position: relative;
+}
+
+
+html {
+  background-color: $background-color;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.main-card {
+  background-color: $card-color;
+  max-width: 1110px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.left-section {
+  padding: 70px 90px 70px 70px;
+  transition: 300ms all;
+}
+
+.right-section {
+  background-size: cover;
+  min-height: 446px;
+  background-image: url("../images/image-header-desktop.jpg");
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $image-overlay;
+    mix-blend-mode: multiply;
+  }
+}
+
+.page-title {
+  font-family: $inter;
+  font-weight: 700;
+  color: white;
+
+  @include fluid-type(28, 44);
+
+  span {
+    color: $image-overlay;
+  }
+}
+
+.page-content {
+  font-family: $inter;
+  font-weight: 400;
+  color: white;
+
+  @include fluid-type(15, 15);
+
+  margin-bottom: 4.861vw;
+}
+
+.stats{
+  .stat{
+    width: 30%;
+    display: inline-block;
+    color: white;
+    &-stat{
+      @include fluid-type(24,24);
+      font-family: $inter;
+      font-weight: 700;
+      margin-bottom: 0px;
+    }
+    &-title{
+      opacity: 0.6;
+      font-family: $lexend;
+      font-size: 12px;
+      color: #FFFFFF;
+      letter-spacing: 1px;
+      line-height: 25px;
+      text-transform: uppercase;
+      margin-top: 0;
+    }
+  }
+}
+
+
+@media (max-width: 992px) {
+  body{
+    padding: 80px 40px;
+  }
+  .main-card{
+    flex-direction: column-reverse;
+  }
+
+  .left-section, .right-section {
+    transition: 300ms all;
+    flex: 0 1 auto;
+  }
+  .right-section {
+    background-size: cover;
+    min-height: 270px;
+    max-width: 100%;
+    position: relative;
+    background-image: url("../images/image-header-mobile.jpg");
+  }
+
+  .left-section{
+    padding: 40px 30px;
+    text-align: center;
+  }
+
+  .stats{
+    .stat{
+      width: 100%;
+      display: block;
+    }
+  }
+
+}
+
+@media (min-width: 992.01px) {
+  .left-section, .right-section {
+    flex: 1;
+  }
+
+  .main-card{
+    border-bottom-left-radius: 8px;
+    border-top-left-radius: 8px;
+  }
+
+  .right-section{
+    border-bottom-right-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+}
